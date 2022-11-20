@@ -1,0 +1,320 @@
+Saurabh Sonalkar 
+Salman Shikalgar 
+Ruturaj Raut
+Harshad Shinde 
+
+Title of Assignment:  SQL Queries - all types of Join, Sub-Query and View
+ 
+mysql> use customer;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_customer |
++--------------------+
+| customerdetail     |
+| orders             |
++--------------------+
+2 rows in set (0.01 sec)
+
+
+mysql> select * from customerdetail;
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+mysql> select * from orders;
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+
+
+--INNER JOIN 
+
+customerdetail table
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+
+order table
+
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+
+Query for inner join 
+
+mysql> select id,name,Amount,Date from customerdetail inner join orders on customerdetail.id=orders.customer_Id;
+
+output:-
++------+----------+--------+------------+
+| id   | name     | Amount | Date       |
++------+----------+--------+------------+
+|    2 | Khilan   |   1560 | 2009-11-20 |
+|    3 | Kaushik  |   1500 | 2009-10-08 |
+|    3 | Kaushik  |   3000 | 2009-10-08 |
+|    4 | Chaitali |   2060 | 2008-5-20  |
++------+----------+--------+------------+
+4 rows in set (0.00 sec)
+
+
+--LEFT OUTER JOIN
+
+customerdetail table
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+
+order table
+
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+
+Query for left-outer join 
+
+mysql> select id,name,Amount,Date from customerdetail left join orders on customerdetail.id=orders.customer_Id;
+
+output:-
++------+----------+--------+------------+
+| id   | name     | Amount | Date       |
++------+----------+--------+------------+
+|    1 | Ramesh   |   NULL | NULL       |
+|    2 | Khilan   |   1560 | 2009-11-20 |
+|    3 | Kaushik  |   1500 | 2009-10-08 |
+|    3 | Kaushik  |   3000 | 2009-10-08 |
+|    4 | Chaitali |   2060 | 2008-5-20  |
+|    5 | Hardik   |   NULL | NULL       |
+|    6 | Komal    |   NULL | NULL       |
+|    7 | Muffy    |   NULL | NULL       |
++------+----------+--------+------------+
+8 rows in set (0.00 sec)
+
+
+--RIGHT OUTER JOIN
+customerdetail table
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+
+order table
+
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+Query for right-outer join
+
+mysql> select id,name,Amount,Date from customerdetail right join orders on customerdetail.id=orders.customer_Id;
+
+output:-
++------+----------+--------+------------+
+| id   | name     | Amount | Date       |
++------+----------+--------+------------+
+|    3 | Kaushik  |   3000 | 2009-10-08 |
+|    3 | Kaushik  |   1500 | 2009-10-08 |
+|    2 | Khilan   |   1560 | 2009-11-20 |
+|    4 | Chaitali |   2060 | 2008-5-20  |
++------+----------+--------+------------+
+4 rows in set (0.01 sec)
+
+--SELF JOIN
+customerdetail table
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+
+order table
+
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+
+Query for self join
+
+mysql> select a.id,b.name,a.salary from customerdetail a,customerdetail b where a.salary<b.salary;
+
+output:-
++------+----------+--------+
+| id   | name     | salary |
++------+----------+--------+
+|    7 | Ramesh   |  10000 |
+|    6 | Ramesh   |   4500 |
+|    5 | Ramesh   |   8500 |
+|    4 | Ramesh   |   6500 |
+|    3 | Ramesh   |   2000 |
+|    2 | Ramesh   |   1500 |
+|    2 | Kaushik  |   1500 |
+|    6 | Chaitali |   4500 |
+|    3 | Chaitali |   2000 |
+|    2 | Chaitali |   1500 |
+|    6 | Hardik   |   4500 |
+|    4 | Hardik   |   6500 |
+|    3 | Hardik   |   2000 |
+|    2 | Hardik   |   1500 |
+|    3 | Komal    |   2000 |
+|    2 | Komal    |   1500 |
+|    6 | Muffy    |   4500 |
+|    5 | Muffy    |   8500 |
+|    4 | Muffy    |   6500 |
+|    3 | Muffy    |   2000 |
+|    2 | Muffy    |   1500 |
++------+----------+--------+
+21 rows in set (0.00 sec)
+
+--CROSS JOIN 
+
+customerdetail table
++------+----------+------+-----------+--------+
+| id   | name     | age  | address   | salary |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |  20000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Idore     |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+
+
+order table
+
++------+------------+-------------+--------+
+| OId  | Date       | customer_Id | Amount |
++------+------------+-------------+--------+
+|  102 | 2009-10-08 |           3 |   3000 |
+|  100 | 2009-10-08 |           3 |   1500 |
+|  101 | 2009-11-20 |           2 |   1560 |
+|  103 | 2008-5-20  |           4 |   2060 |
++------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+Query for cross join
+
+
+mysql> select id,name,Amount,Date from customerdetail,orders;
+
+output:-
+
++------+----------+--------+------------+
+| id   | name     | Amount | Date       |
++------+----------+--------+------------+
+|    1 | Ramesh   |   2060 | 2008-5-20  |
+|    1 | Ramesh   |   1560 | 2009-11-20 |
+|    1 | Ramesh   |   1500 | 2009-10-08 |
+|    1 | Ramesh   |   3000 | 2009-10-08 |
+|    2 | Khilan   |   2060 | 2008-5-20  |
+|    2 | Khilan   |   1560 | 2009-11-20 |
+|    2 | Khilan   |   1500 | 2009-10-08 |
+|    2 | Khilan   |   3000 | 2009-10-08 |
+|    3 | Kaushik  |   2060 | 2008-5-20  |
+|    3 | Kaushik  |   1560 | 2009-11-20 |
+|    3 | Kaushik  |   1500 | 2009-10-08 |
+|    3 | Kaushik  |   3000 | 2009-10-08 |
+|    4 | Chaitali |   2060 | 2008-5-20  |
+|    4 | Chaitali |   1560 | 2009-11-20 |
+|    4 | Chaitali |   1500 | 2009-10-08 |
+|    4 | Chaitali |   3000 | 2009-10-08 |
+|    5 | Hardik   |   2060 | 2008-5-20  |
+|    5 | Hardik   |   1560 | 2009-11-20 |
+|    5 | Hardik   |   1500 | 2009-10-08 |
+|    5 | Hardik   |   3000 | 2009-10-08 |
+|    6 | Komal    |   2060 | 2008-5-20  |
+|    6 | Komal    |   1560 | 2009-11-20 |
+|    6 | Komal    |   1500 | 2009-10-08 |
+|    6 | Komal    |   3000 | 2009-10-08 |
+|    7 | Muffy    |   2060 | 2008-5-20  |
+|    7 | Muffy    |   1560 | 2009-11-20 |
+|    7 | Muffy    |   1500 | 2009-10-08 |
+|    7 | Muffy    |   3000 | 2009-10-08 |
++------+----------+--------+------------+
+28 rows in set (0.00 sec)
+
+

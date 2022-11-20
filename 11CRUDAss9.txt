@@ -1,0 +1,23 @@
+Design and Develop MongoDBQueries using CRUD operations.(Use CRUDoperations,SAVE method, logical operators etc.).
+use mydb
+db.createCollection('stud'); 
+db.stud.insert({rollno:1, name:'ZZZ',marks:91}); 
+db.stud.find().pretty()
+db.stud.insert([{rollno:2, name:'AAA', marks:90}, {rollno:3, name:'BBB', marks:80}, {rollno:4, name:'CCC', marks:70}, {rollno:5, name:'DDD', marks:85}, {rollno:6, name:'EEE', marks:90}, {rollno:7, name:'FFF', marks:95}, {rollno:8, name:'GGG', marks:70}, {rollno:9, name:'HHH', marks:60}, {rollno:10, name:'III', marks:98}]); 
+db.stud.find().pretty() 
+db.stud.find({name:'AAA'}).pretty(); 
+db.stud.find({},{name:1}).pretty(); 
+db.stud.find({},{name:1,rollno:1}).pretty(); 
+db.stud.find({name:'ZZZ',rollno:1}).pretty(); 
+db.stud.find({marks:{$lt:70}}).pretty(); 
+db.stud.find({marks:{$gt:70}}).pretty(); 
+db.stud.find({marks:{$gte:90}}).pretty(); 
+db.stud.find({marks:{$lte:80}}).pretty(); 
+db.stud.update({rollno:2},{$set:{name:'AAA'}}); 
+db.stud.find().pretty()
+db.stud.remove({name:'xyz',rollno:1,marks:90}); 
+db.stud.find({name:{$in:['FFF','III','JJJ']}}); 
+db.stud.ensureIndex({name:1}); 
+db.stud.getIndexes(); 
+db.stud.dropIndex({name:1}); 
+db.stud.getIndexes();

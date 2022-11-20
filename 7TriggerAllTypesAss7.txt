@@ -1,0 +1,20 @@
+7	
+Write a database trigger on the student table.Perform all types of triggers on the 
+created table.	
+
+create database lib; 
+use lib;
+create table library(accession integer primary key, title varchar(60),author varchar(80),publisher varchar(50)); 
+describe library; 
+describe library_audit; 
+insert into library values(1,'Let us C','kanitakar','Tata'); 
+insert into library values(2,'C programming','balagi','technical'); 
+insert into library values(3,'Distributed Systems','AAA','TecMax');
+create trigger update_lib after update on library for each row insert into library_audit(accession,title,author,publisher,operation)values(old.accession,old.title,old.auth or,old.publisher,'update'); 
+select * from library_audit; select * from library; update library set publisher='tata' where accession=2; select * from library_audit;
+create trigger delete_lib after delete on library for each row insert into library_audit(accession,title,author,publisher,operation)values(old.accession,old.title,old.auth or,old.publisher,'delete');
+SET foreign_key_checks=0;
+select * from library_audit;
+create trigger insert_lib after insert on library for each row insert into library_audit(accession,title,author,publisher,operation)values(new.accession,new.title,new.a uthor,new.publisher,'insert'); 
+insert into library values(4,'Java Programming','BBB','technical'); 
+select * from library_audit;

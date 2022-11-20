@@ -1,0 +1,142 @@
+PRACTICAL NO 5
+
+PREPARED BY:-
+1.Vedant Chaudhari  Mobno-8530574404
+2.Parth Jaiswal     Mobno-7058950193
+
+PROBLEM STATEMENT:-
+
+Unnamed PL/SQL code block: Use of Control structure and Exception handling is
+mandatory.
+Suggested Problem statement:
+Consider Tables:
+1. Borrower(Roll_no, Name, DateofIssue, NameofBook, Status)
+2. Fine(Roll_no,Date,Amt)
+ .Accept Roll_no and NameofBook from user.
+ .Check the number of days (from date of issue).
+ .If days are between 15 to 30 then fine amount will be Rs 5per day.
+ .If no. of days>30, per day fine will be Rs 50 per day and for days less than 30, Rs. 5 per
+  day.
+ . After submitting the book, status will change from I to R.
+ . If condition of fine is true, then details will be stored into fine table.
+ . Also handles the exception by named exception handler or user define exception handler.
+
+++++++DEMO+++++++
+
+create database prac4;
+use prac4;
+create table class(cid int,cname varchar(20),primary key(cid));
+Query OK, 0 rows affected (0.15 sec)
+delimiter $$
+create procedure insert_details()
+    -> begin
+    -> insert into class(cid,cname) values(null,'fe');
+    -> select 'successfull insertion';
+    -> end;
+    -> $$
+ERROR 1048 (23000): Column 'cid' cannot be null
+create procedure add_details_handler(in cid1 int,in cname1 varchar(10)) 
+    -> begin 
+    -> declare not_null int default 0; 
+    -> begin 
+    -> declare exit handler for 1048 set not_null=1; 
+    -> insert into class (cid,cname) values (cid1,cname1); 
+    -> select 'successfull insertion'; 
+    -> end; 
+    -> if not_null =1 then 
+    -> select 'unsuccessfull insertion due to null values'; 
+    -> end if; 
+    -> end;
+    -> $$
+Query OK, 0 rows affected (0.15 sec)
+call add_details_handler(null,'fe')
+    -> ;
+    -> $$
++--------------------------------------------+
+| unsuccessfull insertion due to null values |
++--------------------------------------------+
+| unsuccessfull insertion due to null values |
++--------------------------------------------+
+1 row in set (0.00 sec)
+Query OK, 0 rows affected (0.00 sec)
+call add_details_handler(1,'fe');
+$$
++-----------------------+
+| successfull insertion |
++-----------------------+
+| successfull insertion |
++-----------------------+
+1 row in set (0.14 sec)
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+CODE:-
+
+ 
+ 
+
+delimiter $
+create procedure fine_calculation(IN rno int (3), bname char (20)) begin
+declare i_date date;
+declare diff int;
+declare fine_amt int;
+declare exit handler for sqlexception select 'Table not Found';
+select dateofIssue into i_date from borrower where rollin = rno and bname =bname;
+select datediff (curdate(),i_date) into diff;
+if(diff>15 and diff<=30) then set fine_amt - diff*5;
+insert into fine values (rno, curdate() , fine_amt);
+elseif(diff>30) then
+set fine_amt = 15*5 + (diff-30) *50:
+insert into fine values (rno, curdate() , fine_amt);
+end if;
+update borrower set status = 'R' where rollin=rno and bname =bname;
+end;
+$
+
+ 
+
+ 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+       ACTIVITY QUESTIONS: -----
+
+1.	Write a PL/SQL block which accepts a cleaner number and returns the cleaners name and salary and update this cleaner’s details by increasing salary by 10%. Use Exception Handling.
+
+
+
+
+
+2. Write a PL/SQL block to find Largest of three numbers
+
+
+Declare
+a number:=10;
+b number:=12;
+c number:=5;
+begin
+dbms_output.put_line('a='||a||' b='||b||' c='||c);
+if a>b AND a>c
+then
+dbms_output.put_line('a is greatest');
+else
+if b>a AND b>c
+then
+dbms_output.put_line('b is greatest');
+else
+dbms_output.put_line('c is greatest');
+end if;
+end if;
+end;
+
+
+Problem Statement : 
+Write a PL/SQL code block to calculate the area of a circle for a value of radius varying from 5 to 9. Store the radius and the corresponding values of calculated area in an empty table named areas, consisting of two columns, radius and area.Note: Instructor will frame the problem statement for writing PL/SQL block in line with above statement.
+ 
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+Write Exception handling code with the Use of Control structure. Consider Tables:
+1.	Borrower(Roll_no, Name, Date of Issue, Name of Book, Status)
+2.	Fine(Roll_no, Date, Amt)
+•	Accept Roll_no and Name of Book from user.
+•	Check the number of days (from date of issue).
+•	If days are between 15 to 30 then fine amount will be Rs 5per day.
+•	If no. of days>30, per day fine will be Rs 50 per day and for days less than 30, Rs. 5 per Day.
+After submitting the book, status will change from I to R.
+•	If condition of fine is true, then details will be stored into fine table.
+•	Also handles the exception by named exception handler or user define exception handler.
+create database sits; use sits;
+CREATE TABLE borrower(roll_no int , name VARCHAR(25), dateofissue DATE,name_of_book VARCHAR(25), status VARCHAR(20));
+CREATE TABLE fine(roll_no int,date_of_return DATE,amt int);
+INSERT INTO borrower VALUES(45,'ASHUTOSH',2020/07/19,'HARRY POTTER','PENDING');
+INSERT INTO borrower VALUES(46,'TOSH','2003/1/1','HARRY POTTER','PENDING');  
+INSERT INTO borrower VALUES(47,'SH','2004/1/1','POTTER','PENDING');
+Delimiter //
+create procedure B(roll_new int,book_name varchar(20))
+begin                                                                                                
+declare X integer;                                                                                  
+declare continue handler for not found                                                               
+begin                                                                                                
+select 'NOT FOUND';                                                                                  
+end;                                                                                                 
+select datediff(curdate(),dateofissue) into X from borrower where roll_no=roll_new;                                         
+if(X>15&&X<30)                                                                                       
+then                                                                                                 
+insert into fine values(roll_new,curdate(),(X*5));                                                  
+end if;                                                                                              
+if (X>30)                                                                                            
+then                                                                                                 
+insert into fine values(roll_new,curdate(),(X*50));                                                 
+end if;                                                                                              
+update borrower set status='returned' where roll_no=roll_new;                                        
+end;         
+call B(45,'HARRY POTTER');// 
+select * from fine;//

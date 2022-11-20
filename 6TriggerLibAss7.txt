@@ -1,0 +1,22 @@
+6	
+Write a database trigger on the Library table. The System should keep track of the 
+records that are being updated or deleted. The old value of updated or deleted 	
+records should be added in the Library_Audit table.		
+
+create database lib; 
+use lib;
+create table library(accession integer primary key, title varchar(60),author varchar(80),publisher varchar(50));
+create table library_audit(accession integer, title varchar(60),author varchar(80),publisher varchar(50),operation varchar(50),constraint ad foreign key(accession)references library(accession)); 
+describe library; 
+describe library_audit; 
+insert into library values(1,'Let us C','kanitakar','Tata'); 
+insert into library values(2,'C programming','balagi','technical'); 
+insert into library values(3,'Distributed Systems','AAA','TecMax');
+create trigger update_lib before update on library for each row insert into library_audit(accession,title,author,publisher,operation)values(old.accession,old.title,old.auth or,old.publisher,'update');
+create trigger delete_lib before delete on library for each row insert into library_audit(accession,title,author,publisher,operation)values(old.accession,old.title,old.auth or,old.publisher,'delete');
+SET foreign_key_checks=0;
+select * from library; 
+select * from library_audit; 
+update library set publisher='tata' where accession=2; 
+delete from library where accession=1;
+select * from library_audit;

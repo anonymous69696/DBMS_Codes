@@ -1,0 +1,44 @@
+Write a Stored Procedure namely proc_Grade for the categorization of student. If marks scored by students in examination is <=1500 and marks>=990 then student will be placed in distinction category if marks scored are between 989 and900 category is first class, if marks 899 and 825 category is Higher Second Class Write a PL/SQL block for using procedure created with above requirement. Stud_Marks(name, total_marks) show databases;
+use sits;  create database marks;   use marks; create table studmarks(name varchar(20),total_marks integer); create table result(roll_no integer,name varchar(20),class varchar(25));
+DELIMITER $
+create procedure proc_grade(in rollno tinyint,in name varchar(15),in marks int) 
+begin 
+declare class varchar(25);  
+if marks>=990 and marks<=1500 then set class="Distinction";  
+elseif marks<=989 and marks>=900 then set class="First Class";  
+elseif marks<=899 and marks>=825 then set class="Second Class";  
+elseif marks<=824 and marks>=700 then set class="Pass";  
+else  set class="Fail";  
+end if;  
+insert into studmarks values(name,marks);  
+insert into result values(rollno,name,class);  
+end$
+ 
+DELIMITER $     
+call proc_grade(1,"Aryan",850);   
+DELIMITER $
+    call proc_grade(2,"Peter",1000);   
+DELIMITER $
+    call proc_grade(3,"Smith",834);  
+DELIMITER $
+    call proc_grade(4,"Carol",750);   
+DELIMITER $ 
+call proc_grade(5,"Bob",950);   
+DELIMITER $
+    select * from result;
+  DELIMITER $
+    select * from studmarks;   
+DELIMITER $
+create function tot_stud(classname varchar(25))
+  returns int   
+begin   
+declare total int(20);   
+select distinct count(*) into total from result where class=classname;   
+return total;   
+end $  
+select tot_stud("Second Class");  
+DELIMITER $
+ select tot_stud("Pass");   
+DELIMITER $
+ select tot_stud("First Class");
+  DELIMITER $

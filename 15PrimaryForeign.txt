@@ -1,0 +1,6 @@
+Create Student and Branch tables. In the students table create attributes like Rollno, Name,Class, Div,City, DOB. Branch table with Branch_Id,Branch_name,Rollno. Build relationship between the table using primary key and Foreign key.
+create database SITS;  
+use SITS; 
+create table student(roll int primary key, name varchar(30),class varchar(30),division int, city  varchar(30),dob DATE); 
+create table branch(bid int primary key,bname varchar(30),roll int references student(roll)); 
+update branch set bname="Bas Kar Bhai" where roll=4;

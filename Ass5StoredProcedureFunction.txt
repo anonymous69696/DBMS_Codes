@@ -1,0 +1,257 @@
+DBMS LAB PROBLEM STATEMENT 6: STORED PROCEDURE IMPLEMENTATION
+TEA 109 PRATHAM BHOR
+TEA 132 SHUBHAM GADE
+
+Named PL/SQL Block: PL/SQL Stored Procedure and Stored Function.
+Write a Stored Procedure namely proc_Grade for the categorization of student. If marks scored by
+students in examination is <=1500 and marks>=990 then student will be placed in distinction
+category if marks scored are between 989 and 900 category is first class, if marks 899 and 825
+category is Higher Second Class.
+Write a PL/SQL block to use procedure created with above requirement.
+Stud_Marks(name, total_marks) Result(Roll,Name, Class)
+Note: Instructor will frame the problem statement for writing stored procedure and Function in
+line with above statement.
+
+
+
+Demo code:
+
+->show databases;
+->show tables;
+->select * from result;
+
+->delimiter ;
+->delimiter @@
+->select * from result;
+->@@
+
+->create procedure updatestatus1(in mark1 int)
+-> begin
+-> declare mymark int;
+-> set mymark=mark1;
+-> if mymark>12 then
+-> update result set status='pass' where marks=mymark;
+-> else
+-> update result set status='fail' where marks=mymark;
+-> end if;
+-> end;
+-> @@
+
+->call updatestatus1(15);
+
+->select * from result;
+-> @@
+
+->delimiter ;
+->call updatestatus1(12);
+
+->select * from result;
+
+
+
+
+
+
+
+Code according to problem statement 6:
+
+mysql> create table stud_marks(name varchar(20), totalmarks int);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into stud_marks(name, totalmarks) values('Ajay',1400);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into stud_marks(name, totalmarks) values('Raj',950);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into stud_marks(name, totalmarks) values('Vijaya',850);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into stud_marks(name, totalmarks) values('Paresh',750);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into stud_marks(name, totalmarks) values('Abhishek',1250);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from stud_marks;
++----------+------------+
+| name     | totalmarks |
++----------+------------+
+| Ajay     |       1400 |
+| Raj      |        950 |
+| Vijaya   |        850 |
+| Paresh   |        750 |
+| Abhishek |       1250 |
++----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create table result(roll int, name varchar(20), class varchar(40));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into result(roll,name) values(1,'Ajay');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into result(roll,name) values(2,'Raj');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into result(roll,name) values(3,'Vijaya');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into result(roll,name) values(4,'Paresh');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into result(roll,name) values(5,'Abhishek');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from result;
++------+----------+-------+
+| roll | name     | class |
++------+----------+-------+
+|    1 | Ajay     | NULL  |
+|    2 | Raj      | NULL  |
+|    3 | Vijaya   | NULL  |
+|    4 | Paresh   | NULL  |
+|    5 | Abhishek | NULL  |
++------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table stud_marks add rollno int;
+    -> //
+Query OK, 5 rows affected (0.56 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> update stud_marks set rollno=1 where name='Ajay';
+    -> //
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update stud_marks set rollno=2 where name='Raj';//
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update stud_marks set rollno=3 where name='Vijaya';//
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update stud_marks set rollno=4 where name='Paresh';//
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update stud_marks set rollno=5 where name='Abhishek';//
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from stud_marks;
+    -> //
++----------+------------+--------+
+| name     | totalmarks | rollno |
++----------+------------+--------+
+| Ajay     |       1400 |      1 |
+| Raj      |        950 |      2 |
+| Vijaya   |        850 |      3 |
+| Paresh   |        750 |      4 |
+| Abhishek |       1250 |      5 |
++----------+------------+--------+
+5 rows in set (0.02 sec)
+
+
+mysql> delimiter //
+mysql>  create procedure proc_Grade(IN rno int, OUT grade varchar(25))
+    ->
+    -> begin
+    -> declare m int;
+    ->
+    -> select totalmarks into m from stud_marks where rollno=rno;
+    -> if m>=990 and m<=1500 then
+    ->
+    -> select 'Distinction' into grade;
+    ->
+    -> update result set class = 'Distinction' where roll=rno;
+    -> elseif m>=900 and m<=989 then
+    ->
+    -> select 'First Class' into grade;
+    ->
+    -> update result set class = 'First Class' where roll=rno;
+    -> elseif m>=825 and m<=899 then
+    ->
+    -> select 'Higher Second Class' into grade;
+    ->
+    -> update result set class = 'Higher Second Class' where roll=rno;
+    -> else
+    -> select '--' into grade;
+    -> update result set class = '--' where roll=rno;
+    -> end if;
+    -> end;//
+Query OK, 0 rows affected (0.02 sec)
+
+
+mysql> delimiter //
+mysql> create function func_grade(rno int)
+    -> returns varchar(25)
+    -> deterministic
+    -> begin
+    -> declare grade varchar(25);
+    -> call proc_Grade(rno,grade);
+    -> return grade;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> select func_grade(1);
+    -> //
++---------------+
+| func_grade(1) |
++---------------+
+| Distinction   |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> select func_grade(2);//
++---------------+
+| func_grade(2) |
++---------------+
+| First Class   |
++---------------+
+1 row in set (0.04 sec)
+
+mysql> select func_grade(3);//
++---------------------+
+| func_grade(3)       |
++---------------------+
+| Higher Second Class |
++---------------------+
+1 row in set (0.03 sec)
+
+mysql> select func_grade(4);//
++---------------+
+| func_grade(4) |
++---------------+
+| --            |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> select func_grade(5);//
++---------------+
+| func_grade(5) |
++---------------+
+| Distinction   |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> select * from result;
+    -> //
++------+----------+---------------------+
+| roll | name     | class               |
++------+----------+---------------------+
+|    1 | Ajay     | Distinction         |
+|    2 | Raj      | First Class         |
+|    3 | Vijaya   | Higher Second Class |
+|    4 | Paresh   | --                  |
+|    5 | Abhishek | Distinction         |
++------+----------+---------------------+
+5 rows in set (0.00 sec)
+
+Thank You !
+
+

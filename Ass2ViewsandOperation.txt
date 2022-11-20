@@ -1,0 +1,454 @@
+mysql> insert into client_master 
+values('005','abc','nasik','nasik','422003','MH','5000'); Query OK, 1 row affected (0.06 sec)
+mysql> select * from client_master;                           
++-----------+-------------+---------+-------+---------+-------
++---------+
+| client_no | client_name | address | city  | pincode | state 
+| bal_due |
++-----------+-------------+---------+-------+---------+-------
++---------+
+|         1 | abhi        | nasik   | nasik |  422004 | MH    
+|    5000 |
+|         2 | piyu        | nasik   | nasik |  422004 | MH    
+|   10000 |
+|         3 | abd         | nasik   | nasik |  422003 | MH    
+|    5000 |
+|         4 | abd         | nasik   | nasik |  422003 | MH    
+|    5000 |
+|         5 | abc         | nasik   | nasik |  422003 | MH    
+|    5000 |
++-----------+-------------+---------+-------+---------+-------
++---------+ 5 rows in set (0.00 sec)
+mysql> select client_name,client_no from client_master; +-------------+-----------+
+| client_name | client_no |
++-------------+-----------+
+| abhi        |         1 |
+| piyu        |         2 |
+| abd         |         3 |
+| abd         |         4 |
+| abc         |         5 |
++-------------+-----------+ 5 rows in set (0.00 sec)
+mysql> insert into client_master 
+values('006','xyz','nasik','nasik','422004','MH','6000'); Query OK, 1 row affected (0.15 sec)
+mysql> select client_name,client_no from client_master;       +-------------+-----------+
+| client_name | client_no |
++-------------+-----------+
+| abhi        |         1 |
+| piyu        |         2 |
+| abd         |         3 |
+| abd         |         4 |
+| abc         |         5 |
+| xyz         |         6 |
++-------------+-----------+ 6 rows in set (0.08 sec)
+mysql> create table product_master(product_no int,description varchar(20),profit_per float,unit_measure varchar(10),quantity int,reorder int,sell_price float,cost_price float,primary key(product_no)); Query OK, 0 rows affected (0.77 sec)
+mysql> insert into product_master 
+values('001','shampoo','1','one','4','2','10','15'); Query OK, 1 row affected (0.17 sec)
+mysql> insert into product_master 
+values('002','oil','13','one','4','2','11','16');
+Query OK, 1 row affected (0.06 sec)
+mysql> alter table client_master add telephone_no int; Query OK, 0 rows affected (1.04 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from client_master;
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+
+| client_no | client_name | address | city  | pincode | state 
+| bal_due | telephone_no |
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+
+|         1 | abhi        | nasik   | nasik |  422004 | MH    
+|    5000 |         NULL |
+|         2 | piyu        | nasik   | nasik |  422004 | MH    
+|   10000 |         NULL |
+|         3 | abd         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         4 | abd         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         5 | abc         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         6 | xyz         | nasik   | nasik |  422004 | MH    
+|    6000 |         NULL |
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+ 6 rows in set (0.00 sec)
+mysql> select * from product_master;
++------------+-------------+------------+--------------
++----------+---------+------------+------------+
+| product_no | description | profit_per | unit_measure | quantity | reorder | sell_price | cost_price |
++------------+-------------+------------+--------------
++----------+---------+------------+------------+
+|          1 | shampoo     |          1 | one          |      
+4 |       2 |         10 |         15 |
+|          2 | oil         |         13 | one          |      
+4 |       2 |         11 |         16 |
++------------+-------------+------------+--------------
++----------+---------+------------+------------+ 2 rows in set (0.00 sec)
+mysql> create index client_search on client_master(client_no); Query OK, 0 rows affected (0.42 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> create table auto(roll_no int NOT NULL AUTO_INCREMENT,name varchar(20),primary key(roll_no)); Query OK, 0 rows affected (0.36 sec)
+mysql> select * from auto; Empty set (0.01 sec)
+mysql> insert into auto values('1','abc'); Query OK, 1 row affected (0.07 sec)
+mysql> insert into auto values('2','adc'); Query OK, 1 row affected (0.08 sec)
+mysql> alter table auto auto_increment=100; Query OK, 0 rows affected (0.07 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from auto; +---------+------+
+| roll_no | name |
++---------+------+
+|       1 | abc  |
+|       2 | adc  |
++---------+------+ 2 rows in set (0.00 sec)
+mysql> insert into auto values(null,'abd'); Query OK, 1 row affected (0.05 sec)
+mysql> select * from auto; +---------+------+
+| roll_no | name |
++---------+------+
+|       1 | abc  |
+|       2 | adc  |
+|     100 | abd  |
++---------+------+ 3 rows in set (0.00 sec)
+mysql> insert into auto values(null,'reh'); Query OK, 1 row affected (0.06 sec)
+mysql> select * from auto; +---------+------+
+| roll_no | name |
++---------+------+
+|       1 | abc  |
+|       2 | adc  |
+|     100 | abd  |
+|     101 | reh  |
++---------+------+ 4 rows in set (0.00 sec)
+mysql> update client_master set client_name="nut" where 
+client_no='4';
+Query OK, 1 row affected (0.09 sec) Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select * from client_master;
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+
+| client_no | client_name | address | city  | pincode | state 
+| bal_due | telephone_no |
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+
+|         1 | abhi        | nasik   | nasik |  422004 | MH    
+|    5000 |         NULL |
+|         2 | piyu        | nasik   | nasik |  422004 | MH    
+|   10000 |         NULL |
+|         3 | abd         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         4 | nut         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         5 | abc         | nasik   | nasik |  422003 | MH    
+|    5000 |         NULL |
+|         6 | xyz         | nasik   | nasik |  422004 | MH    
+|    6000 |         NULL |
++-----------+-------------+---------+-------+---------+-------
++---------+--------------+ 6 rows in set (0.00 sec)
+mysql> create index client_find on 
+client_master(client_name,city);      Query OK, 0 rows affected (0.41 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> show tables; +----------------+
+| Tables_in_Abhi |
++----------------+
+| auto           |
+| client_master  |
+| product_master |
++----------------+ 3 rows in set (0.08 sec)
+mysql> select * from product_master;
++------------+-------------+------------+--------------
++----------+---------+------------+------------+
+| product_no | description | profit_per | unit_measure | quantity | reorder | sell_price | cost_price |
++------------+-------------+------------+--------------
++----------+---------+------------+------------+
+|          1 | shampoo     |          1 | one          |      
+4 |       2 |         10 |         15 |
+|          2 | oil         |         13 | one          |      
+4 |       2 |         11 |         16 |
++------------+-------------+------------+--------------
++----------+---------+------------+------------+ 2 rows in set (0.00 sec)
+mysql> desc product_master; +--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| product_no   | int(11)     | NO   | PRI | NULL    |       |
+| description  | varchar(20) | YES  |     | NULL    |       |
+| profit_per   | float       | YES  |     | NULL    |       |
+| unit_measure | varchar(10) | YES  |     | NULL    |       |
+| quantity     | int(11)     | YES  |     | NULL    |       |
+| reorder      | int(11)     | YES  |     | NULL    |       |
+| sell_price   | float       | YES  |     | NULL    |       |
+| cost_price   | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.05 sec)
+mysql> alter table client_master rename to c_master; Query OK, 0 rows affected (0.25 sec)
+mysql> insert into product_master 
+values('003','nutela','15','three','40','5','110','123'); Query OK, 1 row affected (0.05 sec)
+mysql> alter table product_master modify sell_price float(10,2); Query OK, 0 rows affected (0.06 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> desc product_master;                            +--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| product_no   | int(11)     | NO   | PRI | NULL    |       |
+| description  | varchar(20) | YES  |     | NULL    |       |
+| profit_per   | float       | YES  |     | NULL    |       |
+| unit_measure | varchar(10) | YES  |     | NULL    |       |
+| quantity     | int(11)     | YES  |     | NULL    |       |
+| reorder      | int(11)     | YES  |     | NULL    |       |
+| sell_price   | float(10,2) | YES  |     | NULL    |       |
+| cost_price   | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+ 8 rows in set (0.00 sec) mysql> create view client as select client_no,client_name from c_master; Query OK, 0 rows affected (0.05 sec)
+mysql> select * from client; +-----------+-------------+
+| client_no | client_name |
++-----------+-------------+
+|         5 | abc         |
+|         3 | abd         |
+|         1 | abhi        |
+|         4 | nut         |
+|         2 | piyu        |
+|         6 | xyz         |
++-----------+-------------+ 6 rows in set (0.23 sec)
+mysql> 
+---------------------------ASSIGNMENT NO. 3  -----------------------------------
+NAME: Shinde Abhijeet Hindurao
+ROLL NO: 34
+TITLE: Design at least 10 SQL queries for suitable database application using SQL DML statements: Insert, Select, Update, Delete with operators, functions, and set operator.
+-----------------------------------------------------------------------------------------mysql> show databases; +--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| A                  |
+| Abhi               |
+| PVG                |
+| RENUKA             |
+| mysql              |
+| nishant            |
+| performance_schema |
+| renuka             |
+| sys                |
+| time               |
++--------------------+ 11 rows in set (0.11 sec)
+mysql> use Abhi;
+Reading table information for completion of table and column names You can turn off this feature to get a quicker startup with -A
+Database changed mysql> create table Employee(emp_no int,emp_name varchar(20),date date,position varchar(20)); Query OK, 0 rows affected (0.75 sec)
+mysql> alter table Employee add salary int; Query OK, 0 rows affected (0.68 sec) Records: 0  Duplicates: 0  Warnings: 0
+mysql> insert into Employee values('01','abc','2018-0711','clerk','50000'); Query OK, 1 row affected (0.08 sec)
+mysql> insert into Employee values('02','abhi','2018-0511','ceo','150000'); Query OK, 1 row affected (0.08 sec)
+mysql> insert into Employee values('03','xyz','2018-0521','hr','100000'); Query OK, 1 row affected (0.04 sec)
+mysql> insert into Employee values('04','aqwgy','2018-0621','te','10000'); Query OK, 1 row affected (0.03 sec)
+mysql> insert into Employee values('05','sfhjfh','2018-0721','gt','12000'); Query OK, 1 row affected (0.03 sec)
+mysql> create table TE(emp_no int,emp_name 
+varchar(20),join_date date,position varchar(20),salary int); Query OK, 0 rows affected (0.36 sec)
+mysql> insert into TE values('01','abc','2018-0711','clerk','50000');Query OK, 1 row affected (0.03 sec)
+mysql> insert into TE values('02','abhi','2018-05-
+11','ceo','150000');    Query OK, 1 row affected (0.04 sec) mysql> insert into TE values('03','xyz','2018-0521','hr','100000');    Query OK, 1 row affected (0.04 sec)
+mysql> insert into TE values('04','aqwgy','2018-0621','te','10000');    Query OK, 1 row affected (0.05 sec)
+mysql> insert into TE values('05','sfhjfh','2018-0721','gt','12000');    Query OK, 1 row affected (0.04 sec)
+mysql> select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | join_date  | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.04 sec)
+mysql> select * from Employee; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | date       | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+
+5 rows in set (0.00 sec)
+mysql> update TE set emp_name='gjgj' where emp_no='5'; Query OK, 1 row affected (0.13 sec) Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | join_date  | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | gjgj     | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.00 sec)
+mysql> select * from Employee union select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | date       | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
+|      5 | gjgj     | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 6 rows in set (0.01 sec)
+mysql> select * from Employee union all select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | date       | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | gjgj     | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 10 rows in set (0.00 sec)
+mysql> select distinct emp_no from Employee where emp_no in(select emp_no from TE); +--------+
+| emp_no |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|      4 |
+|      5 |
++--------+ 5 rows in set (0.03 sec)
+mysql> select * from Employee; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | date       | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.00 sec)
+mysql> select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | join_date  | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | gjgj     | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.00 sec)
+mysql> select distinct emp_name from Employee where emp_name in(select emp_name from TE); +----------+
+| emp_name |
++----------+
+| abc      |
+| abhi     |
+| xyz      |
+| aqwgy    |
++----------+
+4 rows in set (0.00 sec)
+mysql> select * from Employee; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | date       | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | sfhjfh   | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.00 sec)
+mysql> select * from TE; +--------+----------+------------+----------+--------+
+| emp_no | emp_name | join_date  | position | salary |
++--------+----------+------------+----------+--------+
+|      1 | abc      | 2018-07-11 | clerk    |  50000 |
+|      2 | abhi     | 2018-05-11 | ceo      | 150000 |
+|      3 | xyz      | 2018-05-21 | hr       | 100000 |
+|      4 | aqwgy    | 2018-06-21 | te       |  10000 |
+|      5 | gjgj     | 2018-07-21 | gt       |  12000 |
++--------+----------+------------+----------+--------+ 5 rows in set (0.00 sec)
+mysql> select distinct emp_name from Employee where emp_name in(select emp_name from TE); +----------+
+| emp_name |
++----------+
+| abc      |
+| abhi     |
+| xyz      |
+| aqwgy    |
++----------+ 4 rows in set (0.00 sec)
+mysql> select min(salary) from Employee; +-------------+
+| min(salary) |
++-------------+
+|       10000 |
++-------------+ 1 row in set (0.04 sec)
+mysql> select max(salary) from Employee; +-------------+
+| max(salary) |
++-------------+
+|      150000 |
++-------------+ 1 row in set (0.00 sec)
+mysql> select sum(salary) from Employee; +-------------+
+| sum(salary) |
++-------------+
+|      322000 |
++-------------+ 1 row in set (0.00 sec)
+mysql> select avg(salary) from Employee; +-------------+
+| avg(salary) |
++-------------+
+|  64400.0000 |
++-------------+ 1 row in set (0.00 sec)
+mysql> select count(salary) from Employee; +---------------+
+| count(salary) |
++---------------+
+|             5 |
++---------------+ 1 row in set (0.00 sec)
+mysql> select lcase(emp_no) from Employee; +---------------+
+| lcase(emp_no) |
++---------------+
+| 1             |
+| 2             |
+| 3             |
+| 4             |
+| 5             |
++---------------+ 5 rows in set (0.00 sec)
+mysql> select ucase(emp_no) from Employee; +---------------+
+| ucase(emp_no) |
++---------------+
+| 1             |
+| 2             |
+| 3             |
+| 4             |
+| 5             |
++---------------+ 5 rows in set (0.00 sec)
+mysql> select lcase(salary) from Employee; +---------------+
+| lcase(salary) |
++---------------+
+| 50000         |
+| 150000        |
+| 100000        |
+| 10000         |
+| 12000         |
++---------------+ 5 rows in set (0.00 sec)
+mysql> select mid(emp_no,1,3) from Employee; +-----------------+
+| mid(emp_no,1,3) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
++-----------------+ 5 rows in set (0.01 sec)
+mysql> select mid(emp_no,1,3) from Employee; +-----------------+
+| mid(emp_no,1,3) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
++-----------------+ 5 rows in set (0.00 sec)
+mysql> select mid(emp_no,1,5) from Employee; +-----------------+
+| mid(emp_no,1,5) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
++-----------------+ 5 rows in set (0.00 sec)
+mysql> select mid(salary,1,3) from Employee; +-----------------+
+| mid(salary,1,3) |
++-----------------+
+| 500             |
+| 150             |
+| 100             |
+| 100             |
+| 120             |
++-----------------+
+5 rows in set (0.00 sec)
+mysql> select mid(salary,1,5) from Employee; +-----------------+
+| mid(salary,1,5) |
++-----------------+
+| 50000           |
+| 15000           |
+| 10000           |
+| 10000           |
+| 12000           |
++-----------------+ 5 rows in set (0.00 sec)
+mysql> select mid(emp_no,1,2) from Employee; +-----------------+
+| mid(emp_no,1,2) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
++-----------------+ 5 rows in set (0.00 sec)
+mysql>

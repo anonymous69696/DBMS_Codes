@@ -1,0 +1,21 @@
+Create  table employee with attributes emp_id, emp_name,dept, city etc. implement group functions like max,min, count,sum on employee table.Find top two highest salaries from salary attributes.
+create database dbms;
+create table a1; 
+use dbms; 
+create table  employee(emp_id int primary key,emp_name varchar (50),dept varchar(20),city varchar(20));
+//INSERT DATA QUERIES in the following 
++--------+----------+------+------+---------+
+| emp_id | emp_name | dept | city | emp_sal |
++--------+----------+------+------+---------+
+|      1 | Rush     | comp | beed |   60000 |
+|      2 | Vin      | comp | pune |   67000 |
+|      3 | Kya      | comp | pune |    7000 |
+|      4 | Dekh     | comp | pune |  100000 |
+|      5 | Rha      | comp | pune |  150000 |
+|      6 | He       | comp | pune |  151244 | 
+|      7 | Lo     | comp | pune |  120000 |
+select max(emp_sal) from employee; 
+select min(emp_sal) from employee; 
+select count(*) from employee; 
+select sum(emp_sal) from employee;
+select max(emp_sal) from employee union select max(emp_sal) from employee where emp_sal not in(select max(emp_sal) from employee) ;
